@@ -125,14 +125,6 @@ double exec_time(clock_t end_time, clock_t start_time) {
     return (double) (end_time - start_time) / CLOCKS_PER_SEC;
 }
 
-double calculateAverage(int *array, int size) {
-    int sum = 0;
-    for (int i = 0; i < size; i++) {
-        sum += array[i];
-    }
-    return (double) sum / size;
-}
-
 void run_tests(int test_num) {
 
     // Iterate through 3 cases
@@ -196,18 +188,38 @@ void run_tests(int test_num) {
     }
 }
 
+
+double calculateAverage(double *array, int size) {
+    double sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += array[i];
+    }
+    return (double) sum / size;
+}
+
 void generate_results() {
     file = fopen("../test_results/results.csv", "w");
 
     for (int i = 0; i < total_cases; i++) {
+        fprintf(file, "case %d\nthreads, 1, 2, 4, 8\nserial, ", i);
+        // serial results
+        double average_serial = calculateAverage(results_mutex[i][0], num_of_tests);
+        fprintf(file, "%f, ", average_serial);
+
+        // mutex results
+        fprintf(file, "\nmutex, ");
         for (int j = 0; j < size_threads; j++) {
-            for (int k = 0; k < num_of_tests; k++) {
-                fprintf(file, "m-%f, ", results_mutex[i][j][k]);
-                fprintf(file, "l-%f, ", results_rwlock[i][j][k]);
-            }
-            fprintf(file, "\n");
+            double average_mutex = calculateAverage(results_mutex[i][j], num_of_tests);
+            fprintf(file, "%f, ", average_mutex);
         }
-        fprintf(file, "\n");
+
+        // rw lock results
+        fprintf(file, "\nrw_lock, ");
+        for (int j = 0; j < size_threads; j++) {
+            double average_rwlock = calculateAverage(results_rwlock[i][j], num_of_tests);
+            fprintf(file, "%f, ", average_rwlock);
+        }
+        fprintf(file, "\n\n");
     }
 
     fclose(file);
