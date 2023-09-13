@@ -3,6 +3,7 @@
 #include "../include/common.h"
 #include <time.h>
 #include <pthread.h>
+#include <math.h>
 
 FILE *file;
 
@@ -189,7 +190,7 @@ void run_tests(int test_num) {
 }
 
 
-double calculateAverage(double *array, int size) {
+double calculate_average(double *array, int size) {
     double sum = 0;
     for (int i = 0; i < size; i++) {
         sum += array[i];
@@ -197,27 +198,40 @@ double calculateAverage(double *array, int size) {
     return (double) sum / size;
 }
 
+double calculate_std(double *array, int size, double mean) {
+    double sum = 0.0;
+    for(int i = 0; i < size; ++i) {
+        sum += pow(array[i] - mean, 2);
+    }
+    return sqrt(sum / size);
+}
+
 void generate_results() {
     file = fopen("../test_results/results.csv", "w");
 
     for (int i = 0; i < total_cases; i++) {
-        fprintf(file, "case %d\nthreads, 1, 2, 4, 8\nserial, ", i);
+        fprintf(file, "case %d\nthreads,, 1,, 2,, 4,, 8\n", i+1);
+        fprintf(file, ", avg, std, avg, std, avg, std, avg, std\nserial, ");
         // serial results
-        double average_serial = calculateAverage(results_mutex[i][0], num_of_tests);
-        fprintf(file, "%f, ", average_serial);
+        double average_serial = calculate_average(results_mutex[i][0], num_of_tests);
+        double std_serial = calculate_std(results_mutex[i][0], num_of_tests, average_serial);
+        fprintf(file, "%f, %f", average_serial, std_serial);
 
         // mutex results
         fprintf(file, "\nmutex, ");
         for (int j = 0; j < size_threads; j++) {
-            double average_mutex = calculateAverage(results_mutex[i][j], num_of_tests);
-            fprintf(file, "%f, ", average_mutex);
+            double average_mutex = calculate_average(results_mutex[i][j], num_of_tests);
+            double std_mutex = calculate_std(results_mutex[i][j], num_of_tests, average_mutex);
+            fprintf(file, "%f, %f, ", average_mutex, std_mutex);
         }
 
         // rw lock results
         fprintf(file, "\nrw_lock, ");
         for (int j = 0; j < size_threads; j++) {
-            double average_rwlock = calculateAverage(results_rwlock[i][j], num_of_tests);
-            fprintf(file, "%f, ", average_rwlock);
+            double average_rwlock = calculate_average(results_rwlock[i][j], num_of_tests);
+            double std_rwlock = calculate_std(results_mutex[i][j], num_of_tests, average_rwlock);
+
+            fprintf(file, "%f, %f, ", average_rwlock, std_rwlock);
         }
         fprintf(file, "\n\n");
     }
