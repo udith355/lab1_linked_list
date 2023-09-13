@@ -29,7 +29,9 @@ int num_of_methods = 3;
 
 
 int num_of_tests = 5;
-double results[3][4][5] = {0}; //results[total_cases][size_of_threads][num_of_tests]
+double results_serial[3][1][5] = {0}; //results[total_cases][size_of_threads][num_of_tests]
+double results_mutex[3][4][5] = {0}; //results[total_cases][size_of_threads][num_of_tests]
+double results_rwlock[3][4][5] = {0}; //results[total_cases][size_of_threads][num_of_tests]
 
 
 
@@ -135,7 +137,7 @@ void run_tests(int test_num) {
 
     // Iterate through 3 cases
     for (int i = 0; i < total_cases; i++) {
-        int case_number = i+1;
+        int case_number = i + 1;
         printf("case : %d\n", case_number);
 
         double m_member = m_member_values[case_number];
@@ -161,7 +163,7 @@ void run_tests(int test_num) {
                 thread_function(arguments_ser);
                 clock_t end_time_ser = clock();
                 printf("----method : 0, exec time %.10fs\n", exec_time(end_time_ser, start_time_ser));
-                results[i][0][0] = exec_time(end_time_ser, start_time_ser);
+                results_serial[i][0][test_num] = exec_time(end_time_ser, start_time_ser);
             }
 
             // method indexes - 0: sequential , 1: mutex, 2: rw_lock
@@ -182,7 +184,11 @@ void run_tests(int test_num) {
                 end_time = clock();
 
                 printf("----method : %d, exec time %.10fs\n", method, exec_time(end_time, start_time));
-                results[i][thread_count_id][method] = exec_time(end_time, start_time);
+                if (method == 1) {
+                    results_mutex[i][thread_count_id][test_num] = exec_time(end_time, start_time);
+                } else {
+                    results_rwlock[i][thread_count_id][test_num] = exec_time(end_time, start_time);
+                }
             }
 
         }
@@ -196,7 +202,8 @@ void generate_results() {
     for (int i = 0; i < total_cases; i++) {
         for (int j = 0; j < size_threads; j++) {
             for (int k = 0; k < num_of_tests; k++) {
-                fprintf(file, "%f, ", results[i][j][k]);
+                fprintf(file, "m-%f, ", results_mutex[i][j][k]);
+                fprintf(file, "l-%f, ", results_rwlock[i][j][k]);
             }
             fprintf(file, "\n");
         }
