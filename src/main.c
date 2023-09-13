@@ -29,7 +29,7 @@ int num_of_methods = 3;
 
 
 int num_of_tests = 5;
-double results[3][4][5]; //results[total_cases][size_of_threads][num_of_tests]
+double results[3][4][5] = {0}; //results[total_cases][size_of_threads][num_of_tests]
 
 
 
@@ -134,8 +134,8 @@ double calculateAverage(int *array, int size) {
 void run_tests(int test_num) {
 
     // Iterate through 3 cases
-    for (int i = 1; i <= total_cases; i++) {
-        int case_number = i;
+    for (int i = 0; i < total_cases; i++) {
+        int case_number = i+1;
         printf("case : %d\n", case_number);
 
         double m_member = m_member_values[case_number];
@@ -161,7 +161,7 @@ void run_tests(int test_num) {
                 thread_function(arguments_ser);
                 clock_t end_time_ser = clock();
                 printf("----method : 0, exec time %.10fs\n", exec_time(end_time_ser, start_time_ser));
-                results[case_number][0][0] = exec_time(end_time_ser, start_time_ser);
+                results[i][0][0] = exec_time(end_time_ser, start_time_ser);
             }
 
             // method indexes - 0: sequential , 1: mutex, 2: rw_lock
@@ -182,7 +182,7 @@ void run_tests(int test_num) {
                 end_time = clock();
 
                 printf("----method : %d, exec time %.10fs\n", method, exec_time(end_time, start_time));
-                results[case_number][thread_count_id][method] = exec_time(end_time, start_time);
+                results[i][thread_count_id][method] = exec_time(end_time, start_time);
             }
 
         }
