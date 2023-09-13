@@ -15,7 +15,6 @@ int n = 1000;
 int m = 10000;
 int total_cases = 3;
 
-int num_of_tests = 3;
 
 int *operation_list;
 
@@ -28,17 +27,12 @@ int numbers_of_threads[] = {1, 2, 4, 8};
 int size_threads = 4;
 int num_of_methods = 3;
 
-double results[3][4][3]; //results[total_cases][size_of_threads][num_of_tests]
+
+int num_of_tests = 5;
+double results[3][4][5]; //results[total_cases][size_of_threads][num_of_tests]
 
 
 
-void printl(int *arr) {
-    int length = 10000;
-    for (int i = 0; i < length; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n================\n");
-}
 
 long getRandomValue() {
     return rand() % 65536;
@@ -197,7 +191,7 @@ void run_tests(int test_num) {
 }
 
 void generate_results() {
-    file = fopen("../test_results/results.csv", "a");
+    file = fopen("../test_results/results.csv", "w");
 
     for (int i = 0; i < total_cases; i++) {
         for (int j = 0; j < size_threads; j++) {
@@ -218,7 +212,6 @@ int main() {
     for (int test = 0; test < num_of_tests; test++) {
         run_tests(test);
     }
-
     generate_results();
 
     return 0;

@@ -58,6 +58,7 @@
     "WebServerToolWindowFactoryState": "false",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
+    "com.jetbrains.cidr.cpp.cmake.workspace.CMakeCacheInvalidator.marker": "true",
     "git-widget-placeholder": "main",
     "last_opened_file_path": "D:/CSE sem7/concurrent programming/labs/lab1_linked_list",
     "node.js.detected.package.eslint": "true",
@@ -90,7 +91,7 @@
       <updated>1694524065767</updated>
       <workItem from="1694524068965" duration="17431000" />
       <workItem from="1694549783387" duration="6026000" />
-      <workItem from="1694578728615" duration="9173000" />
+      <workItem from="1694578728615" duration="11221000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
