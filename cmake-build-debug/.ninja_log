@@ -1,0 +1,15 @@
+# ninja log v5
+1	1350	7162274994420146	build.ninja	9e39a42b2dd35504
+5	142	7162916404572798	CMakeFiles/lab1_linked_list.dir/src/main.c.obj	49313eb934692d87
+2	194	7162880147057044	CMakeFiles/lab1_linked_list.dir/src/common.c.obj	ed971c8b955b01dc
+142	312	7162916405834610	lab1_linked_list.exe	2ce489f25af37621
+2	126	7162916711515708	CMakeFiles/lab1_linked_list.dir/src/main.c.obj	49313eb934692d87
+127	272	7162916712956654	lab1_linked_list.exe	2ce489f25af37621
+4	234	7162917400521259	CMakeFiles/lab1_linked_list.dir/src/main.c.obj	49313eb934692d87
+234	433	7162917402466699	lab1_linked_list.exe	2ce489f25af37621
+3	120	7162917934578711	CMakeFiles/lab1_linked_list.dir/src/main.c.obj	49313eb934692d87
+121	238	7162917935700232	lab1_linked_list.exe	2ce489f25af37621
+3	122	7162918395023350	CMakeFiles/lab1_linked_list.dir/src/main.c.obj	49313eb934692d87
+122	236	7162918396116850	lab1_linked_list.exe	2ce489f25af37621
+2	410	7162922892656684	CMakeFiles/lab1_linked_list.dir/src/main.c.obj	49313eb934692d87
+411	740	7162922895931598	lab1_linked_list.exe	2ce489f25af37621
