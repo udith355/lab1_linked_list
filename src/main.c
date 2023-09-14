@@ -127,7 +127,6 @@ double exec_time(clock_t end_time, clock_t start_time) {
 }
 
 void run_tests(int test_num) {
-
     // Iterate through 3 cases
     for (int i = 0; i < total_cases; i++) {
         int case_number = i + 1;
@@ -139,23 +138,21 @@ void run_tests(int test_num) {
 
         create_operation_list(m_member, m_insert, m_delete);
 
-        shuffle_array(operation_list, m);
-
-
         // Iterate through number of threads
         for (int thread_count_id = 0; thread_count_id < size_threads; thread_count_id++) {
             int thread_count = numbers_of_threads[thread_count_id];
-            printf("--number of threads : %d\n", thread_count);
+//            printf("--number of threads : %d\n", thread_count);
             pthread_t threads[thread_count];
 
             // Run serial for single thread
             if (thread_count == 1) {
                 linked_list = initialize_linked_list(linked_list, n);
+                shuffle_array(operation_list, m);
                 clock_t start_time_ser = clock();
                 int arguments_ser[] = {0, 1, 0};
                 thread_function(arguments_ser);
                 clock_t end_time_ser = clock();
-                printf("----method : 0, exec time %.10fs\n", exec_time(end_time_ser, start_time_ser));
+//                printf("----method : 0, exec time %.10fs\n", exec_time(end_time_ser, start_time_ser));
                 results_serial[i][0][test_num] = exec_time(end_time_ser, start_time_ser);
             }
 
@@ -176,7 +173,7 @@ void run_tests(int test_num) {
 
                 end_time = clock();
 
-                printf("----method : %d, exec time %.10fs\n", method, exec_time(end_time, start_time));
+//                printf("----method : %d, exec time %.10fs\n", method, exec_time(end_time, start_time));
                 if (method == 1) {
                     results_mutex[i][thread_count_id][test_num] = exec_time(end_time, start_time);
                 } else {
@@ -185,7 +182,7 @@ void run_tests(int test_num) {
             }
 
         }
-        printf("case %d done!\n\n", case_number);
+        printf("done!\n\n");
     }
 }
 
@@ -200,7 +197,7 @@ double calculate_average(double *array, int size) {
 
 double calculate_std(double *array, int size, double mean) {
     double sum = 0.0;
-    for(int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i) {
         sum += pow(array[i] - mean, 2);
     }
     return sqrt(sum / size);
@@ -210,7 +207,7 @@ void generate_results() {
     file = fopen("../test_results/results.csv", "w");
 
     for (int i = 0; i < total_cases; i++) {
-        fprintf(file, "case %d\nthreads,, 1,, 2,, 4,, 8\n", i+1);
+        fprintf(file, "case %d\nthreads,, 1,, 2,, 4,, 8\n", i + 1);
         fprintf(file, ", avg, std, avg, std, avg, std, avg, std\nserial, ");
         // serial results
         double average_serial = calculate_average(results_mutex[i][0], num_of_tests);
