@@ -83,7 +83,7 @@ void *thread_function(void *arguments) {
                     Member(randomNumber, linked_list);
                     pthread_mutex_unlock(&mutex);
                 } else if (method == 2) {
-                    pthread_rwlock_wrlock(&rwlock);
+                    pthread_rwlock_rdlock(&rwlock);
                     Member(randomNumber, linked_list);
                     pthread_rwlock_unlock(&rwlock);
                 } else {
