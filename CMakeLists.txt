@@ -9,3 +9,5 @@ add_executable(lab1_linked_list
         include/common.h
         src/common.c
 )
+# Link the math library (-lm)
+target_link_libraries(lab1_linked_list PRIVATE m)
