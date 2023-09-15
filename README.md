@@ -27,7 +27,7 @@ To run the program the directory structure should be kept as it is.
 2. Navigate to the directory where your C file is located using the cd command. 
 3. To change the number of tests, change the variable in **line 10** in `main.c`. 
 The limit for `num_of_tests` is **1000** 
-4. Once you’re in the correct directory, compile your C file using the gcc compiler.`gcc main.c -o main`
+4. Once you’re in the correct directory, compile your C file using the gcc compiler.`gcc main.c common.c -o main -lm`
 5. Run the compiled program.`./main`. 
 Even if, num_of_tests is not given, program will be run using default value (100)
 
