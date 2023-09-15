@@ -14,13 +14,14 @@ The program is made to run all 3 test cases using the pre-defined
 Those attributes are set as global variables in the program (main.c).
 Linked list will be populated and the operation list will be shuffled in each execution.
 
-The result will be generated as  results.csv file in ../test_results/ directory
 
 
 ## Instructions
 
 The program was impl
 To run the program the directory structure should be kept as it is.
+The result will be generated in results.csv file in ./test_results/ directory
+To view the results in an organised manner, use a tool such as MS Excel or LibreOffice Calc 
 
 ### steps 
 1. Open your terminal.
@@ -29,5 +30,5 @@ To run the program the directory structure should be kept as it is.
 The limit for `num_of_tests` is **1000** 
 4. Once you’re in the correct directory, compile your C file using the gcc compiler.`gcc main.c common.c -o main -lm`
 5. Run the compiled program.`./main`. 
-Even if, num_of_tests is not given, program will be run using default value (100)
+Even if, num_of_tests is not given, program will be run using default value (500)
 
