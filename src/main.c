@@ -5,6 +5,10 @@
 #include <pthread.h>
 #include <math.h>
 
+
+// Number of test iterations.
+int num_of_tests = 3;
+
 FILE *file;
 
 pthread_mutex_t mutex;
@@ -29,10 +33,9 @@ int size_threads = 4;
 int num_of_methods = 3;
 
 
-int num_of_tests = 5;
-double results_serial[3][1][5] = {0}; //results[total_cases][size_of_threads][num_of_tests]
-double results_mutex[3][4][5] = {0}; //results[total_cases][size_of_threads][num_of_tests]
-double results_rwlock[3][4][5] = {0}; //results[total_cases][size_of_threads][num_of_tests]
+double results_serial[3][1][1000] = {0}; //results[total_cases][size_of_threads][max for num_of_tests]
+double results_mutex[3][4][1000] = {0}; //results[total_cases][size_of_threads][max for num_of_tests]
+double results_rwlock[3][4][1000] = {0}; //results[total_cases][size_of_threads][max for num_of_tests]
 
 
 
@@ -123,14 +126,14 @@ void *thread_function(void *arguments) {
 }
 
 double exec_time(clock_t end_time, clock_t start_time) {
-    return (double) (end_time - start_time) / CLOCKS_PER_SEC;
+    return (double) (end_time - start_time) * 1000000 / CLOCKS_PER_SEC;
 }
 
 void run_tests(int test_num) {
+    printf("test %d: ", test_num + 1);
     // Iterate through 3 cases
     for (int i = 0; i < total_cases; i++) {
         int case_number = i + 1;
-        printf("case : %d\n", case_number);
 
         double m_member = m_member_values[case_number];
         double m_insert = m_insert_values[case_number];
@@ -182,8 +185,8 @@ void run_tests(int test_num) {
             }
 
         }
-        printf("done!\n\n");
     }
+    printf("done!\n");
 }
 
 
@@ -242,6 +245,7 @@ int main() {
     for (int test = 0; test < num_of_tests; test++) {
         run_tests(test);
     }
+
     generate_results();
 
     return 0;
